@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Music Player</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" type="text/css" href="css/mystyle.css">
+</head>
+<body>
+<div class="main_div">
+	<div class="music_container">
+		<h2 id="title">LOTUS LANE</h2>
+		<h2 id="artist">The Loyalist</h2>
+		<div class="ima_container">
+			<img src="image/m1.jpg" alt="image1"/>
+		</div>
+		<audio src="music/s1.mp3"></audio>
+
+		<!--Progress bar-->
+
+		<div class="progressbar_container" id="progress_container">
+			<div class="progress_duration_meter">
+				<div id="current_time" style="font-size:16px">0:00</div>
+				<div id="duration" style="font-size:16px">2:00</div>
+			</div>
+			<div class="progress_div" id="progress_div" style="height: 6px;">
+				<div class="progress" id="progress" ></div>
+			</div>
+		</div>
+
+		<!--controls-->
+
+		<div class="music_control">
+		<i class="fas fa-thumbs-up" style="color:white"></i>
+		<i class="fas fa-backward" id="prev" title="Previous"></i>
+		<i class="fas fa-play main_button" id="play" title="Play"></i>
+		<i class="fas fa-forward" id="next" title="Next"></i>
+		<i class="fas fa-heart" style="color:white;"></i>
+		</div>
+	</div>
+</div>
+<script>
+	const music=document.querySelector("audio");
+	const img=document.querySelector("img");
+	const play=document.getElementById("play");
+	const artist=document.getElementById("artist");
+	const title=document.getElementById("title");
+	const prev=document.getElementById("prev");
+	const next=document.getElementById("next");
+    
+    let progress = document.getElementById("progress");
+    let total_duration =document.getElementById("duration");
+    let current_time =document.getElementById("current_time");
+    let progress_div = document.getElementById("progress_div");
+    
+	const songs=[
+	{
+		name:"s1",
+		title:"Gerua Antra Mitra",
+		artist:"Arijit Singh",
+		image:"m1",
+	},
+	{
+		name:"s2",
+		title:"Sanam Re ",
+		artist:"Arijit Singh",
+		image:"m2",
+	},
+	{
+		name:"s3",
+		title:"Shanti Millind Gaba",
+		artist:"Millind Gaba",
+		image:"m3",
+	},
+	{
+		name:"s4",
+		title:"Sanam Teri Kasam ",
+		artist:"Mohammed Irfan",
+		image:"m4",
+	},
+	{
+		name:"s5",
+		title:"Haal - E - Dil (Female)",
+		artist:"Neeti Mohan",
+		image:"m5",
+	},
+	{
+		name:"s6",
+		title:"Aaja Aaja - Remix",
+		artist:"Mohammed Irfan",
+		image:"m6",
+	},
+	{
+		name:"s7",
+		title:"Dhol",
+		artist:"Aurora",
+		image:"m7",
+	},
+	{
+		name:"s8",
+		title:" Kuchh Kuchh",
+		artist:"Arman Malik",
+		image:"m8",
+	},
+	{
+		name:"s9",
+		title:"Hua Hain Aaj Pehli Baar ",
+		artist:"Armaan Malik, Palak Muchhal",
+		image:"m9",
+	},
+	{
+		name:"s10",
+		title:"Theme of Dilwale",
+		artist:"Arijit Singh",
+		image:"m10",
+	},
+	{
+		name:"s11",
+		title:"Chaha Hai Tujhko",
+		artist:"Arijit Singh",
+		image:"m1",
+	},
+	{
+		name:"s12",
+		title:"Bhagwan Hai Kahan Re Tu",
+		artist:"Arijit Singh",
+		image:"m2",
+	},
+	{
+		name:"s13",
+		title:"Mela Dilon Ka",
+		artist:"Millind Gaba",
+		image:"m3",
+	},
+	{
+		name:"s14",
+		title:"Tujhe Rub Ne Banaya",
+		artist:"Mohammed Irfan",
+		image:"m4",
+	},
+	{
+		name:"s15",
+		title:"Chura Ke Dil Mera - Hungama 2",
+		artist:"Neeti Mohan",
+		image:"m5",
+	},
+	{
+		name:"s16",
+		title:"Surroor 2021 Title Track ",
+		artist:" Himesh Reshammiya",
+		image:"m6",
+	},
+	{
+		name:"s17",
+		title:"Tera Mera Pyar - Sajjan Adeeb",
+		artist:"Aurora",
+		image:"m7",
+	},
+	{
+		name:"s18",
+		title:" Tujhe Dekha ",
+		artist:"Nayan Shankar",
+		image:"m8",
+	},
+	{
+		name:"s19",
+		title:"Tum Bewafa Ho ",
+		artist:"Stebin Ben",
+		image:"m9",
+	},
+	{
+		name:"s20",
+		title:"Yaaron Rab Se Dua Karo  ",
+		artist:"Akhil",
+		image:"m10",
+	}
+	];
+
+	let isPlaying=false;
+//for play function
+	const playMusic=()=>{
+		isPlaying=true;
+		music.play();
+		play.classList.replace("fa-play","fa-pause");
+		img.classList.add("anine");
+	};
+//for pouse funsionality
+	const pauseMusic=()=>{
+		isPlaying=false;
+		music.pause();
+		play.classList.replace("fa-pause","fa-play");
+		img.classList.remove("anine");
+	};
+
+play.addEventListener('click',()=>{
+	isPlaying ? pauseMusic() : playMusic();
+});
+
+//change the music funsionality
+const loadSong=(songs)=>{
+   title.textContent=songs.title;
+   artist.textContent=songs.artist;
+   music.src="music/" + songs.name + ".mp3";
+   img.src="image/" + songs.image + ".jpg";
+};
+
+songIndex=0;
+//loadSong(songs[0]);
+
+const nextSong=()=>{
+	songIndex=(songIndex + 1) % songs.length;
+	loadSong(songs[songIndex]);
+	playMusic();
+};
+
+const prevSong=()=>{
+	songIndex=(songIndex - 1 + songs.length) % songs.length;
+	loadSong(songs[songIndex]);
+	playMusic();
+};
+
+//progress js work
+ music.addEventListener("timeupdate",(event)=> {
+ const{ currentTime, duration } = event.srcElement; 
+ let progress_time = (currentTime / duration) * 100;
+ progress.style.width = `${progress_time}%`;
+
+ //music duration update
+ let min_duration = Math.floor(duration / 60);
+ let sec_duration = Math.floor(duration % 60);
+
+ let tot_duration = `${min_duration}:${sec_duration}`;
+ if(duration){
+ total_duration.textContent = `${tot_duration}`;
+}
+
+//current duration update
+ let min_currentTime = Math.floor(currentTime / 60);
+ let sec_currentTime = Math.floor(currentTime % 60);
+
+ if(sec_currentTime < 10)
+ {
+   sec_currentTime = `0${sec_currentTime}`;
+ }
+
+ let tot_currentTime = `${min_currentTime}:${sec_currentTime}`;
+ current_time.textContent = `${tot_currentTime}`;
+
+
+});
+
+ //progress on click funsionality
+
+ progress_div.addEventListener("click", (even) =>{
+ 	const { duration } = music;
+ 	let move_progress = (even.offsetX / event.srcElement.clientWidth) * duration; 
+ 	music.currentTime = move_progress;
+    
+ });
+
+//next song called
+music.addEventListener("event",nextSong);
+next.addEventListener('click',nextSong);
+prev.addEventListener('click',prevSong);
+
+</script>
+</body>
+</html>
